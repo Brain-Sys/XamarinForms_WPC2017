@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Netflix"
+             xmlns:vm="clr-namespace:Netflix.ViewModels;assembly=Netflix.ViewModels"
+             x:Class="Netflix.MainPage"
+             Title="NETFLIX v.0.1 alpha">
+
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:MainViewModel x:Key="viewmodel" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+
+    <Grid BindingContext="{StaticResource viewmodel}"
+          BackgroundColor="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" />
+        <Button BorderColor="White" BorderWidth="4"
+                TextColor="Gold" BackgroundColor="DarkGray"
+                Text="Scarica film" Command="{Binding DownloadFilmCommand}" />
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Items}" RowHeight="100"
+                  ItemSelected="ListView_ItemSelected"
+                  SelectedItem="{Binding SelectedMovie}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Poster.Thumb}" />
+                            <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                <Label Text="{Binding Title}" FontSize="30" TextColor="White" />
+                                <Label Text="(" FontSize="30" TextColor="White" />
+                                <Label Text="{Binding Year}" FontSize="30" TextColor="White" />
+                                <Label Text=")" FontSize="30" TextColor="White" />
+                            </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Label Grid.Row="2" Text="{Binding Count}" FontSize="Large" TextColor="Gold" />
+    </Grid>
+</ContentPage>
